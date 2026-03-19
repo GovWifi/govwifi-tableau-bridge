@@ -1,0 +1,41 @@
+# ---------------------------------------------------
+# SECRETS & CREDENTIALS (CRITICAL)
+# ---------------------------------------------------
+# Never commit your Tableau Personal Access Token!
+pat.json
+.env
+
+# ---------------------------------------------------
+# LARGE BINARIES / INSTALLERS
+# ---------------------------------------------------
+# Ignore the downloaded Tableau Bridge installers
+*.rpm
+TableauBridge-*.x86_64.rpm
+
+# ---------------------------------------------------
+# DATABASE DATA
+# ---------------------------------------------------
+# Ignore local database folders (in case you ever switch 
+# from Docker managed volumes to local bind mounts)
+mysql_data/
+data/
+
+# ---------------------------------------------------
+# IDE / EDITOR FILES
+# ---------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---------------------------------------------------
+# OS GENERATED FILES
+# ---------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+

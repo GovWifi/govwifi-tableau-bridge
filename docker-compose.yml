@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: local-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tableau_test_db
+      POSTGRES_USER: tableau_user
+      POSTGRES_PASSWORD: my-secret-password
+    ports:
+      - "25432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./demo-data/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  tableau-bridge:
+    build:
+      context: .
+    container_name: govwifi-tableau-bridge
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    volumes:
+      - ./pat.json:/app/pat.json
+    command:
+      - "-e" # Forces the Bridge worker to run in the foreground (required for Docker)
+      - "--client=${TABLEAU_CLIENT}"
+      - "--site=${TABLEAU_SITE}"
+      - "--userEmail=${TABLEAU_USER_EMAIL}"
+      - "--patTokenId=${TABLEAU_PAT_TOKEN_ID}"
+      - "--patTokenFile=${TABLEAU_PAT_TOKEN_FILE}"
+      - "--poolId=${TABLEAU_POOL_ID}"
+
+volumes:
+  postgres_data:

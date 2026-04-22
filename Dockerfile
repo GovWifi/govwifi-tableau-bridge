@@ -23,10 +23,17 @@ COPY tableau-bridge.rpm /tmp/tableau-bridge.rpm
 RUN ACCEPT_EULA=y yum install -y /tmp/tableau-bridge.rpm && \
     rm -f /tmp/tableau-bridge.rpm
 
+# chown -R tableau_user:tableau_group /root
+# I do this as Tableau mridge is hardcoded to write to
+# /root/Documents/My_Tableau_Bridge_Repository :(
 RUN groupadd -g ${GID} tableau_group && \
     useradd -u ${UID} -g ${GID} -m -s /bin/bash tableau_user && \
+    mkdir -p /root/Documents/My_Tableau_Bridge_Repository/crashdumps && \
+    chown -R tableau_user:tableau_group /root && \
+    chown -R tableau_user:tableau_group /home/tableau_user && \
     chown -R tableau_user:tableau_group /opt/tableau
 
+# don't run the bridge as root:
 USER tableau_user
 
 # Set the standard startup script as the container entrypoint

@@ -4,7 +4,7 @@ export BUILD_OPTIONS=${BUILD_OPTIONS:-}
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
 export BRIDGE_URL=https://downloads.tableau.com/tssoftware/TableauBridge-20261.26.0226.1626.x86_64.rpm
 
-.PHONY: help up down clean logs status shell-bridge db-client
+.PHONY: help build test up down clean logs status shell-bridge db-client
 
 help:
 	@echo "Usage: make [target]"
@@ -24,6 +24,9 @@ tableau-bridge.rpm:
 
 build: tableau-bridge.rpm
 	docker compose build ${BUILD_OPTIONS}
+
+test:
+	@echo "NOOP: no test system implemented for tableau bridge."
 
 up:
 	docker-compose up -d

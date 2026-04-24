@@ -21,11 +21,20 @@ Tableau Bridge is a piece of client software that runs on an internal network, e
    Create a PAT in Tableau Cloud. Ensure it's for a user domain/group that has privileges to use Tableau Bridge.
 
 2. **Configure Authentication**
-   Create a `pat.json` file to store your token. An example is provided.
+   You can provide the Personal Access Token (PAT) in two ways:
+
+   **Option A: Environment Variable (Recommended for ECS)**
+   Set the `TABLEAU_PAT_JSON` environment variable to the JSON string of your token:
+   ```bash
+   export TABLEAU_PAT_JSON='{"YOUR_TOKEN_NAME": "YOUR_TOKEN_SECRET_STRING_HERE"}'
+   ```
+
+   **Option B: Configuration File**
+   Create a `pat.json` file. An example is provided.
    ```bash
    cp pat.json.example pat.json
    ```
-   Edit `pat.json` so the key is the exact token name provided by Tableau, and the value is the token secret:
+   Edit `pat.json` so the key is the exact token name:
    ```json
    {
      "YOUR_TOKEN_NAME": "YOUR_TOKEN_SECRET_STRING_HERE"
@@ -41,10 +50,11 @@ Tableau Bridge is a piece of client software that runs on an internal network, e
    * `TABLEAU_CLIENT`: A descriptive name for your bridge client (e.g., `GovWifiDataBridge`).
    * `TABLEAU_SITE`: The site name/ID from your Tableau Cloud URL (do not include the full URI).
    * `TABLEAU_USER_EMAIL`: The email address associated with your Tableau PAT.
-   * `TABLEAU_PAT_TOKEN_ID`: Must match the token name from both Tableau Cloud and your `pat.json`.
+   * `TABLEAU_PAT_TOKEN_ID`: Must match the token name from both Tableau Cloud and your token JSON.
    * `TABLEAU_POOL_ID`: (Optional) The Pool ID if assigning this client to a custom Bridge pool.
+   * `TABLEAU_PAT_TOKEN_FILE`: (Optional) Path to the PAT file (defaults to `/app/pat.json`).
 
-   *Note: These values can also be set directly in your shell environment.*
+   *Note: These values can also be set directly in your shell environment. If `TABLEAU_PAT_JSON` is provided, the entrypoint script will automatically write it to `TABLEAU_PAT_TOKEN_FILE`.*
 
 ## Usage
 

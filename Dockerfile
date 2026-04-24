@@ -31,10 +31,15 @@ RUN groupadd -g ${GID} tableau_group && \
     mkdir -p /root/Documents/My_Tableau_Bridge_Repository/crashdumps && \
     chown -R tableau_user:tableau_group /root && \
     chown -R tableau_user:tableau_group /home/tableau_user && \
-    chown -R tableau_user:tableau_group /opt/tableau
+    chown -R tableau_user:tableau_group /opt/tableau && \
+    chown -R tableau_user:tableau_group /app
+
+# Copy the entrypoint script
+COPY --chown=tableau_user:tableau_group entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 # don't run the bridge as root:
 USER tableau_user
 
 # Set the standard startup script as the container entrypoint
-ENTRYPOINT ["/opt/tableau/tableau_bridge/bin/run-bridge.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]

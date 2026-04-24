@@ -20,18 +20,8 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
-    volumes:
-      - ./pat.json:/app/pat.json
     env_file:
       - .env
-    command:
-      - "-e" # Forces the Bridge worker to run in the foreground (required for Docker)
-      - "--client=${TABLEAU_CLIENT}"
-      - "--site=${TABLEAU_SITE}"
-      - "--userEmail=${TABLEAU_USER_EMAIL}"
-      - "--patTokenId=${TABLEAU_PAT_TOKEN_ID}"
-      - "--patTokenFile=${TABLEAU_PAT_TOKEN_FILE}"
-      - "--poolId=${TABLEAU_POOL_ID}"
 
 volumes:
   postgres_data:

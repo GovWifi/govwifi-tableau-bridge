@@ -1,3 +1,5 @@
+Archived as was not practical to use and maintain. Directly data source publishing replaces this https://github.com/GovWifi/govwifi-metrics-data-publisher
+
 # GovWifi Tableau Bridge
 
 This repository provides a containerised environment for running the **Tableau Bridge** client alongside a local PostgreSQL database for testing and demonstration purposes.
